@@ -1,23 +1,58 @@
 <template>
-  <h3>New Project</h3>
-
-  <input v-model="name" placeholder="project name" />
-
-  <button @click="save">save</button>
+  <h3 class="title_form">{{ project ? "Edit project" : "Create project" }}</h3>
+  <div class="form">
+    <GeneralInput v-model="name" placeholder="Name" />
+    <GeneralSelect v-model="status" :options="statusOptions" />
+  </div>
+  <ActionButton text="Save" variant="primary" @click="save" />
 </template>
 
 <script setup lang="ts">
-// import { ref } from "vue";
-// const emit = defineEmits(["created"]);
+import ActionButton from "./ActionButton.vue";
+import GeneralInput from "./GeneralInput.vue";
+import GeneralSelect from "./GeneralSelect.vue";
+import type { Project } from "@/types/project";
 
-// const name = ref("");
-// const description = ref("");
+import { ref, watch } from "vue";
 
-// const save = async () => {
-//   // await projectStore.createProject({
-//   //   name: name.value,
-//   //   description: description.value,
-//   // });
-//   emit("created");
-// };
+const name = ref("");
+const status = ref("");
+const statusOptions = [
+  { value: "", label: "All statuses" },
+  { value: "pending", label: "Pending" },
+  { value: "active", label: "Active" },
+  { value: "done", label: "Done" },
+];
+
+const props = defineProps<{
+  project?: Project;
+}>();
+
+const emit = defineEmits<{
+  (e: "submit", data: { id?: string; name: string; status: string }): void;
+}>();
+
+const save = () => {
+  if (!name.value || !status.value) return;
+
+  emit("submit", {
+    id: props.project?.id,
+    name: name.value,
+    status: status.value,
+  });
+};
+
+watch(
+  () => props.project,
+  (newProject) => {
+    if (newProject) {
+      name.value = newProject.name;
+      status.value = newProject.status;
+    } else {
+      name.value = "";
+      status.value = "";
+    }
+  },
+  { immediate: true }
+);
 </script>

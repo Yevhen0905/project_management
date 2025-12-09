@@ -4,5 +4,5 @@ export interface Task {
   title: string;
   assignee?: string;
   status: "To do" | "In progress" | "Done";
-  dueDate: string;
+  deadline: string;
 }

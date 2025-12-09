@@ -13,13 +13,19 @@
 </template>
 
 <script setup lang="ts">
+import EditDeleteButtons from "./EditDeleteButtons.vue";
+
 import { AgGridVue } from "ag-grid-vue3";
 import type { ColDef } from "ag-grid-community";
 import type { Task } from "@/types/task";
+import { useDateFormatter } from "@/composables/useDateFormatter";
 
 const props = defineProps<{
   tasks: Task[];
 }>();
+const emit = defineEmits(["edit", "delete"]);
+
+const { formatYMD } = useDateFormatter();
 
 const defaultColDef: ColDef = {
   sortable: true,
@@ -40,6 +46,29 @@ const columnDefs: ColDef[] = [
   { headerName: "Title", field: "title" },
   { headerName: "Assignee", field: "assignee" },
   { headerName: "Status", field: "status" },
-  { headerName: "Due Date", field: "dueDate" },
+  {
+    headerName: "Deadline",
+    field: "deadline",
+    valueFormatter: (params) => formatYMD(params.value),
+  },
+  {
+    headerName: "Actions",
+    field: "actions",
+    width: 120,
+    cellRenderer: EditDeleteButtons,
+    cellRendererParams: (params) => ({
+      rowData: params.data,
+      onEdit: onEditTask,
+      onDelete: onDeleteTask,
+    }),
+  },
 ];
+
+function onEditTask(task: Task) {
+  emit("edit", task);
+}
+
+function onDeleteTask(task: Task) {
+  emit("delete", task);
+}
 </script>

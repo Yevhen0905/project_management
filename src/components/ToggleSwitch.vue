@@ -56,7 +56,7 @@ const onChange = (e: Event) => {
   bottom: 0;
   background-color: #cfcfcf;
   border-radius: 28px;
-  transition: background 0.25s;
+  transition: background-color 0.25s;
 }
 
 .slider::before {
