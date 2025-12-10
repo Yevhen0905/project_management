@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <p>
-      Are you sure you want to delete project
-      {{ project?.name || task?.title }}
-    </p>
-    <ActionButton text="Cancel" variant="back" @click="cancel" />
-    <ActionButton text="Delete" variant="delete" @click="confirm" />
+  <div class="wrapper_form">
+    <h4 class="title_form">
+      Are you sure you want to delete {{ project?.name ? "project" : "task" }}
+      {{ project?.name || task?.title }}?
+    </h4>
+    <div class="actions">
+      <ActionButton text="Cancel" variant="back" @click="cancel" />
+      <ActionButton text="Delete" variant="delete" @click="confirm" />
+    </div>
   </div>
 </template>
 

@@ -1,9 +1,16 @@
 <template>
-  <select class="select" :value="modelValue" @change="onChange">
-    <option v-for="opt in options" :key="opt[valueKey]" :value="opt[valueKey]">
-      {{ opt[labelKey] }}
-    </option>
-  </select>
+  <div class="select_wrapper">
+    <label class="label">{{ label }}</label>
+    <select class="select" :value="modelValue" @change="onChange">
+      <option
+        v-for="opt in options"
+        :key="opt[valueKey]"
+        :value="opt[valueKey]"
+      >
+        {{ opt[labelKey] }}
+      </option>
+    </select>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +31,10 @@ const props = defineProps({
     type: String,
     default: "value",
   },
+  label: {
+    type: String,
+    default: "Status:",
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -34,8 +45,12 @@ function onChange(event: Event) {
 </script>
 
 <style scoped lang="scss">
+.select_wrapper {
+  width: 100%;
+}
 .select {
   width: 100%;
+  height: 35px;
   padding: 8px 12px;
   font-size: 14px;
   border: 1px solid #c0c0c0;

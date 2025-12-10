@@ -1,11 +1,11 @@
 <template>
-  <div class="tasks-table-wrapper">
+  <div class="ag-theme-quartz">
     <AgGridVue
-      class="ag-theme-alpine"
-      style="height: 400px; width: 100%"
+      class="grid_table"
       :columnDefs="columnDefs"
       :rowData="tasks"
       :defaultColDef="defaultColDef"
+      :domLayout="'autoHeight'"
       :rowDragManaged="true"
       :animateRows="true"
     />
@@ -37,30 +37,32 @@ const columnDefs: ColDef[] = [
   {
     headerName: "ID",
     field: "id",
-    width: 100,
+    flex: 1,
     rowDrag: true,
     comparator: (valueA: any, valueB: any) => {
       return Number(valueA) - Number(valueB);
     },
   },
-  { headerName: "Title", field: "title" },
-  { headerName: "Assignee", field: "assignee" },
-  { headerName: "Status", field: "status" },
+  { headerName: "Title", field: "title", flex: 1 },
+  { headerName: "Assignee", field: "assignee", flex: 1 },
+  { headerName: "Status", field: "status", flex: 1 },
   {
     headerName: "Deadline",
+    flex: 1,
     field: "deadline",
     valueFormatter: (params) => formatYMD(params.value),
   },
   {
     headerName: "Actions",
     field: "actions",
-    width: 120,
+    flex: 1,
     cellRenderer: EditDeleteButtons,
     cellRendererParams: (params) => ({
       rowData: params.data,
       onEdit: onEditTask,
       onDelete: onDeleteTask,
     }),
+    resizable: false,
   },
 ];
 

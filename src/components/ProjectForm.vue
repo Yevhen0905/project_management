@@ -4,7 +4,12 @@
     <GeneralInput v-model="name" placeholder="Name" />
     <GeneralSelect v-model="status" :options="statusOptions" />
   </div>
-  <ActionButton text="Save" variant="primary" @click="save" />
+  <ActionButton
+    text="Save"
+    variant="primary"
+    @click="save"
+    class="save_button"
+  />
 </template>
 
 <script setup lang="ts">

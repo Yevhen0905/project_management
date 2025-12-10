@@ -3,17 +3,22 @@
   <div class="form">
     <GeneralInput v-model="title" placeholder="Title" />
     <GeneralSelect v-model="status" :options="statusOptions" />
-    <div class="date-picker">
-      <label for="deadline">Deadline:</label>
+    <div class="date_picker">
+      <label class="label" for="deadline">Deadline:</label>
       <input
         id="deadline"
         type="date"
         v-model="deadline"
-        class="deadline-input"
+        class="deadline_input"
       />
     </div>
   </div>
-  <ActionButton text="Save" variant="primary" @click="save" />
+  <ActionButton
+    class="save_button"
+    text="Save"
+    variant="primary"
+    @click="save"
+  />
 </template>
 
 <script setup lang="ts">
@@ -70,15 +75,31 @@ watch(
 </script>
 
 <style scoped lang="scss">
-.date-picker {
+.date_picker {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
 }
 
-.deadline-input {
-  padding: 4px 8px;
+.deadline_input {
+  width: 100%;
+  height: 35px;
+  padding: 7px 12px;
   font-size: 14px;
-  margin-top: 4px;
+  border: 1px solid #c0c0c0;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #4a90e2;
+    background-color: #f5faff;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 6px rgba(74, 144, 226, 0.35);
+  }
 }
 </style>

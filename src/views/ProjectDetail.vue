@@ -1,13 +1,27 @@
 <template>
   <div>
-    <h2>Project Detail: {{ projectId }}</h2>
-    <ToggleSwitch v-model="isShowTaskTable" />
-    <div class="filters">
-      <GeneralInput v-model="filterTitle" placeholder="Filter by title" />
-      <GeneralSelect v-model="filterStatus" :options="statusOptions" />
+    <div class="title_wrapper">
+      <h2 class="title">Project Detail: {{ currentProject.name }}</h2>
+      <ToggleSwitch v-model="tasksViewMode" />
     </div>
-    <ActionButton text="Add task" variant="primary" @click="openTaskModal" />
-    <ActionButton text="Back" variant="back" @click="router.back()" />
+    <div class="wrapper_actions">
+      <div class="filters">
+        <GeneralInput v-model="filterTitle" placeholder="Filter by title" />
+        <GeneralSelect v-model="filterStatus" :options="statusOptions" />
+      </div>
+      <div class="actions">
+        <ActionButton
+          text="Back to projects"
+          variant="back"
+          @click="router.back()"
+        />
+        <ActionButton
+          text="Add task"
+          variant="primary"
+          @click="openTaskModal"
+        />
+      </div>
+    </div>
     <Modal v-model="isTaskModalOpen">
       <TaskForm @submit="handleSubmit" :task="editingTask" />
     </Modal>
@@ -19,7 +33,7 @@
       />
     </Modal>
     <TaskTable
-      v-if="isShowTaskTable"
+      v-if="tasksViewMode"
       :tasks="filteredTasks"
       @edit="editTask"
       @delete="deleteTask"
@@ -45,14 +59,16 @@ import { AgGridVue } from "ag-grid-vue3";
 import type { ColDef } from "ag-grid-community";
 
 import { useTasksStore } from "@/stores/tasksStore";
+import { useProjectStore } from "@/stores/projectsStore";
 import type { Task } from "@/types/task";
+import { useLocalStorage } from "@/composables/useLocalStorage";
 
 const filterTitle = ref("");
 const filterStatus = ref("");
 const taskToDelete = ref<Task | null>(null);
-const isShowTaskTable = ref(true);
 const isTaskModalOpen = ref(false);
 const isModalDelete = ref(false);
+const tasksViewMode = useLocalStorage<boolean>("tasksViewMode", true);
 const editingTask = ref<Task | null>(null);
 const statusOptions = [
   { value: "", label: "All statuses" },
@@ -63,10 +79,14 @@ const statusOptions = [
 
 const route = useRoute();
 const router = useRouter();
+const tasksStore = useTasksStore();
+const projectStore = useProjectStore();
 
 const projectId = route.params.id as string;
 
-const tasksStore = useTasksStore();
+const currentProject = computed(() =>
+  projectStore.projects.find((p) => p.id === projectId)
+);
 
 const filteredTasks = computed(() => {
   return tasksStore.tasks
@@ -125,3 +145,11 @@ onMounted(() => {
   tasksStore.fetchTasks();
 });
 </script>
+
+<style scoped lang="scss">
+.title_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

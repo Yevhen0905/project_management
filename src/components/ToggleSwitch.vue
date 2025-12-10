@@ -1,8 +1,12 @@
 <template>
-  <label class="switch">
-    <input type="checkbox" :checked="isChecked" @change="onChange" />
-    <span class="slider"></span>
-  </label>
+  <div class="toggle_switch">
+    <span>table view </span>
+    <label class="switch">
+      <input type="checkbox" :checked="isChecked" @change="onChange" />
+      <span class="slider"></span>
+    </label>
+    <span>kanban view</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -33,6 +37,12 @@ const onChange = (e: Event) => {
 </script>
 
 <style scoped>
+.toggle_switch {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
 .switch {
   position: relative;
   display: inline-block;

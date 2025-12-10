@@ -1,17 +1,8 @@
 <template>
   <div>
     <h2 class="title">Project List</h2>
-    <ActionButton
-      text="Add project"
-      variant="primary"
-      @click="openProjectModal"
-    />
     <Modal v-model="isProjectModalOpen">
-      <ProjectForm
-        @submit="handleSubmit"
-        :project="editingProject"
-        v-if="projectToDelete"
-      />
+      <ProjectForm @submit="handleSubmit" :project="editingProject" />
     </Modal>
     <Modal v-model="isModalDelete"
       ><DeleteForm
@@ -22,6 +13,7 @@
     </Modal>
     <ProjectsTable
       :projects="projects"
+      @add-project="openProjectModal"
       @edit="editProject"
       @delete="deleteProject"
     />
@@ -30,7 +22,6 @@
 
 <script setup lang="ts">
 import Modal from "@/components/Modal.vue";
-import ActionButton from "@/components/ActionButton.vue";
 import ProjectForm from "@/components/ProjectForm.vue";
 import DeleteForm from "@/components/DeleteForm.vue";
 import ProjectsTable from "@/components/ProjectsTable.vue";

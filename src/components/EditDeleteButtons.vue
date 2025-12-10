@@ -1,7 +1,11 @@
 <template>
-  <div class="edit-delete-buttons">
-    <button @click.stop="handleEdit">Edit</button>
-    <button @click.stop="handleDelete">Delete</button>
+  <div class="edit_delete_buttons">
+    <div class="edit" @click.stop="handleEdit">
+      <span class="material-icons">edit</span>
+    </div>
+    <div class="delete" @click.stop="handleDelete">
+      <span class="material-icons">delete</span>
+    </div>
   </div>
 </template>
 
@@ -28,15 +32,26 @@ function handleDelete() {
 }
 </script>
 
-<style scoped>
-.edit-delete-buttons {
+<style lang="scss">
+.edit_delete_buttons {
   display: flex;
-  gap: 4px;
+  gap: 15px;
+  margin-top: 8px;
 }
 
-.edit-delete-buttons button {
-  padding: 2px 6px;
-  font-size: 12px;
+.edit {
   cursor: pointer;
+
+  .material-icons {
+    color: #5d6661;
+  }
+}
+
+.delete {
+  cursor: pointer;
+
+  .material-icons {
+    color: #e13c3c;
+  }
 }
 </style>

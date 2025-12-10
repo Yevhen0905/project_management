@@ -19,8 +19,7 @@ const props = defineProps<{
   text-decoration: none;
   display: block;
   font-size: 16px;
-  margin: 4px 2px;
-  margin-left: auto;
+  margin: 6px 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -38,7 +37,7 @@ const props = defineProps<{
   text-decoration: none;
   display: block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 6px 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -56,12 +55,16 @@ const props = defineProps<{
   text-decoration: none;
   display: block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 6px 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
     background-color: #e1ebf1;
   }
+}
+
+.save_button {
+  margin-left: auto;
 }
 </style>
