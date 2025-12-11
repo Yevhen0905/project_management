@@ -1,2 +1,2 @@
-@import "./base.scss";
-@import "./modules.scss";
+@use "./base" as *;
+@use "./modules" as *;
