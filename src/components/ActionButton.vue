@@ -19,7 +19,6 @@ const props = defineProps<{
   text-decoration: none;
   display: block;
   font-size: 16px;
-  margin: 6px 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -37,7 +36,6 @@ const props = defineProps<{
   text-decoration: none;
   display: block;
   font-size: 16px;
-  margin: 6px 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 
@@ -55,7 +53,6 @@ const props = defineProps<{
   text-decoration: none;
   display: block;
   font-size: 16px;
-  margin: 6px 2px;
   cursor: pointer;
   transition: all 0.3s ease;
 

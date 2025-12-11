@@ -155,5 +155,9 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 950px) {
+    flex-direction: column;
+  }
 }
 </style>

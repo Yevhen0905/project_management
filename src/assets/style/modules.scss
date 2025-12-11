@@ -1,8 +1,6 @@
 .title {
   font-size: 50px;
   font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 1.5px;
   margin-bottom: 20px;
   text-align: center;
   color: #d7dae0;
@@ -18,7 +16,7 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
-  margin-top: 18px;
+  margin: 18px 0;
 }
 
 .wrapper_form {
@@ -44,7 +42,7 @@
   justify-content: space-between;
   gap: 15px;
 
-  @media only screen and (max-width: 790px) {
+  @media only screen and (max-width: 950px) {
     flex-direction: column;
     align-items: flex-start;
   }

@@ -41,6 +41,10 @@ const onChange = (e: Event) => {
   display: flex;
   align-items: center;
   gap: 9px;
+
+  @media (max-width: 950px) {
+    margin-bottom: 12px;
+  }
 }
 
 .switch {

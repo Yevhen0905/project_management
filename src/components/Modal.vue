@@ -39,7 +39,6 @@ const close = () => {
   background: #fff;
   border-radius: 12px;
   padding: 24px;
-  min-width: 380px;
   max-width: 500px;
   width: 100%;
   animation: scaleIn 0.2s ease;
