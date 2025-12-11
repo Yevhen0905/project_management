@@ -70,3 +70,18 @@
   font-size: 14px;
   color: #262728;
 }
+
+.ag-cell-wrapper {
+  height: 100%;
+}
+
+.error {
+  border-color: red;
+}
+
+.error_message {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 6px;
+  display: block;
+}

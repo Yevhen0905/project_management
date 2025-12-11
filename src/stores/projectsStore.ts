@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { projectApi } from "@/api/projects";
 import type { Project } from "@/types/project";
+import { useNotificationStore } from "./notification";
 
 export const useProjectStore = defineStore("projectStore", {
   state: () => ({
@@ -19,6 +20,12 @@ export const useProjectStore = defineStore("projectStore", {
       try {
         const newProject = await projectApi.createProject(projectData);
         this.projects.push(newProject);
+
+        const notificationStore = useNotificationStore();
+        notificationStore.add({
+          type: "success",
+          message: "Your project has been created!",
+        });
       } catch (error) {
         console.error("error:", error);
       }
@@ -31,6 +38,12 @@ export const useProjectStore = defineStore("projectStore", {
         if (index !== -1) {
           this.projects[index] = updatedProject;
         }
+
+        const notificationStore = useNotificationStore();
+        notificationStore.add({
+          type: "success",
+          message: "Your project has been updated!",
+        });
       } catch (error) {
         console.error("error:", error);
       }
@@ -40,6 +53,12 @@ export const useProjectStore = defineStore("projectStore", {
       try {
         await projectApi.deleteProject(id);
         this.projects = this.projects.filter((project) => project.id !== id);
+
+        const notificationStore = useNotificationStore();
+        notificationStore.add({
+          type: "danger",
+          message: "Your project has been deleted!",
+        });
       } catch (error) {
         console.error("error:", error);
       }

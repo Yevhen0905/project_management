@@ -60,34 +60,6 @@ const statusOptions = [
   { value: "pending", label: "Pending" },
 ];
 
-const projectsWithTaskCount = computed(() => {
-  const list = props.projects.map((project) => {
-    const count = tasksStore.tasks.filter(
-      (t) => t.projectId === project.id
-    ).length;
-    return {
-      ...project,
-      tasksCount: count,
-    };
-  });
-
-  return list.sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
-});
-
-const filteredProjects = computed(() => {
-  return projectsWithTaskCount.value.filter((project: Project) => {
-    const byName = project.name
-      .toLowerCase()
-      .includes(filterName.value.toLowerCase());
-    const byStatus = filterStatus.value
-      ? project.status === filterStatus.value
-      : true;
-    return byName && byStatus;
-  });
-});
-
 const defaultColDef: ColDef = {
   sortable: true,
   resizable: true,
@@ -127,6 +99,34 @@ const columnDefs = ref<ColDef[]>([
   },
 ]);
 
+const projectsWithTaskCount = computed(() => {
+  const list = props.projects.map((project) => {
+    const count = tasksStore.tasks.filter(
+      (t) => t.projectId === project.id
+    ).length;
+    return {
+      ...project,
+      tasksCount: count,
+    };
+  });
+
+  return list.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+});
+
+const filteredProjects = computed(() => {
+  return projectsWithTaskCount.value.filter((project: Project) => {
+    const byName = project.name
+      .toLowerCase()
+      .includes(filterName.value.toLowerCase());
+    const byStatus = filterStatus.value
+      ? project.status === filterStatus.value
+      : true;
+    return byName && byStatus;
+  });
+});
+
 function onEditProject(project: Project) {
   emit("edit", project);
 }
@@ -137,12 +137,6 @@ function onDeleteProject(project: Project) {
 
 function onRowClicked(event: any) {
   router.push(`/project/${event.data.id}`);
-}
-
-function onRowDragEnd(event: RowDragEndEvent) {
-  const newOrder: Project[] = [];
-  event.api.forEachNode((node) => newOrder.push(node.data));
-  emit("update-order", newOrder);
 }
 
 onMounted(() => {

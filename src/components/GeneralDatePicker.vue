@@ -1,12 +1,12 @@
 <template>
-  <div class="input_wrapper">
-    <label class="label">{{ label ?? "Name:" }}</label>
+  <div class="date_picker">
+    <label class="label" for="deadline">Deadline:</label>
     <input
+      id="deadline"
+      type="date"
       :value="modelValue"
-      @input="onInput"
-      :placeholder="placeholder"
-      :class="['input', { error: error }]"
-      maxlength="120"
+      @input="$emit('update:modelValue', $event.target.value)"
+      :class="['deadline_input', { error: error }]"
     />
     <span v-if="error" class="error_message">{{ error }}</span>
   </div>
@@ -15,24 +15,22 @@
 <script setup lang="ts">
 const props = defineProps<{
   modelValue: string;
-  placeholder?: string;
-  label?: string;
   error?: string;
 }>();
 
-const emit = defineEmits(["update:modelValue"]);
-
-function onInput(event: Event) {
-  emit("update:modelValue", (event.target as HTMLInputElement).value);
-}
+const emit = defineEmits<{
+  (e: "update:modelValue", value: string): void;
+}>();
 </script>
 
 <style scoped lang="scss">
-.input_wrapper {
-  width: 100%;
+.date_picker {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.input {
+.deadline_input {
   width: 100%;
   height: 35px;
   padding: 7px 12px;

@@ -1,8 +1,12 @@
 <template>
   <h3 class="title_form">{{ project ? "Edit project" : "Create project" }}</h3>
   <div class="form">
-    <GeneralInput v-model="name" placeholder="Name" />
-    <GeneralSelect v-model="status" :options="statusOptions" />
+    <GeneralInput v-model="name" placeholder="Name" :error="errors.name" />
+    <GeneralSelect
+      v-model="status"
+      :options="statusOptions"
+      :error="errors.status"
+    />
   </div>
   <ActionButton
     text="Save"
@@ -18,7 +22,7 @@ import GeneralInput from "./GeneralInput.vue";
 import GeneralSelect from "./GeneralSelect.vue";
 import type { Project } from "@/types/project";
 
-import { ref, watch } from "vue";
+import { ref, watch, reactive } from "vue";
 
 const name = ref("");
 const status = ref("");
@@ -28,6 +32,7 @@ const statusOptions = [
   { value: "active", label: "Active" },
   { value: "done", label: "Done" },
 ];
+const errors = reactive<{ name?: string; status?: string }>({});
 
 const props = defineProps<{
   project?: Project;
@@ -38,7 +43,22 @@ const emit = defineEmits<{
 }>();
 
 const save = () => {
-  if (!name.value || !status.value) return;
+  errors.name = "";
+  errors.status = "";
+
+  let hasError = false;
+
+  if (!name.value.trim()) {
+    errors.name = "Name is required";
+    hasError = true;
+  }
+
+  if (!status.value) {
+    errors.status = "Status is required";
+    hasError = true;
+  }
+
+  if (hasError) return;
 
   emit("submit", {
     id: props.project?.id,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title_wrapper">
-      <h2 class="title">Project Detail: {{ currentProject.name }}</h2>
+      <h2 class="title">Project {{ currentProject.name }}</h2>
       <ToggleSwitch v-model="tasksViewMode" />
     </div>
     <div class="wrapper_actions">
@@ -84,15 +84,18 @@ const projectStore = useProjectStore();
 
 const projectId = route.params.id as string;
 
-const currentProject = computed(() =>
-  projectStore.projects.find((p) => p.id === projectId)
+const currentProject = computed(
+  () =>
+    projectStore.projects.find((p) => p.id === projectId) || {
+      name: "...",
+    }
 );
 
 const filteredTasks = computed(() => {
   return tasksStore.tasks
     .filter((task: Task) => task.projectId === projectId)
     .filter((task: Task) =>
-      task.title.toLowerCase().includes(filterTitle.value.toLowerCase())
+      task.assignee.toLowerCase().includes(filterTitle.value.toLowerCase())
     )
     .filter((task: Task) =>
       filterStatus.value ? task.status === filterStatus.value : true
@@ -110,8 +113,8 @@ const editTask = (task: Task) => {
 };
 
 const deleteTask = async (task: Task) => {
-  isModalDelete.value = true;
   taskToDelete.value = task;
+  isModalDelete.value = true;
 };
 
 const handleDeleteTask = async () => {
@@ -142,6 +145,7 @@ const handleSubmit = async (data: {
 };
 
 onMounted(() => {
+  projectStore.fetchProjects();
   tasksStore.fetchTasks();
 });
 </script>

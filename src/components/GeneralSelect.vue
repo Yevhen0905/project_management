@@ -1,7 +1,11 @@
 <template>
   <div class="select_wrapper">
-    <label class="label">{{ label }}</label>
-    <select class="select" :value="modelValue" @change="onChange">
+    <label class="label">{{ label ?? "Status:" }}</label>
+    <select
+      :class="['select', { error: error }]"
+      :value="modelValue"
+      @change="onChange"
+    >
       <option
         v-for="opt in options"
         :key="opt[valueKey]"
@@ -10,6 +14,7 @@
         {{ opt[labelKey] }}
       </option>
     </select>
+    <span v-if="error" class="error_message">{{ error }}</span>
   </div>
 </template>
 
@@ -35,6 +40,10 @@ const props = defineProps({
     type: String,
     default: "Status:",
   },
+  error: {
+    type: String,
+    default: "",
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -58,6 +67,10 @@ function onChange(event: Event) {
   background-color: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
+
+  &.error {
+    border-color: #e13c3c;
+  }
 
   &:hover {
     border-color: #4a90e2;

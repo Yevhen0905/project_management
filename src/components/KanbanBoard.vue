@@ -87,6 +87,7 @@ function onCardAdded(evt: any) {
   background: white;
   padding: 12px;
   border-radius: 6px;
+  border: 2px solid #c0c0c0;
   margin-bottom: 8px;
 
   &_title {

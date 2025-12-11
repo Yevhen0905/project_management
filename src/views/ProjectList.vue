@@ -51,8 +51,8 @@ const editProject = (project: Project) => {
 };
 
 const deleteProject = async (project: Project) => {
-  isModalDelete.value = true;
   projectToDelete.value = project;
+  isModalDelete.value = true;
 };
 
 const handleDeleteProject = async () => {

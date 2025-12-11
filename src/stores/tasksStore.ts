@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { taskApi } from "@/api/tasks";
 import type { Task } from "@/types/task";
+import { useNotificationStore } from "./notification";
 
 export const useTasksStore = defineStore("tasksStore", {
   state: () => ({
@@ -20,6 +21,12 @@ export const useTasksStore = defineStore("tasksStore", {
       try {
         const newTask = await taskApi.createTask(taskData);
         this.tasks.push(newTask);
+
+        const notificationStore = useNotificationStore();
+        notificationStore.add({
+          type: "success",
+          message: "Your task has been created!",
+        });
       } catch (error) {
         console.error("error:", error);
       }
@@ -32,6 +39,12 @@ export const useTasksStore = defineStore("tasksStore", {
         if (index !== -1) {
           this.tasks[index] = updatedTask;
         }
+
+        const notificationStore = useNotificationStore();
+        notificationStore.add({
+          type: "success",
+          message: "Your task has been updated!",
+        });
       } catch (error) {
         console.error("error:", error);
       }
@@ -41,6 +54,12 @@ export const useTasksStore = defineStore("tasksStore", {
       try {
         await taskApi.deleteTask(id);
         this.tasks = this.tasks.filter((task) => task.id !== id);
+
+        const notificationStore = useNotificationStore();
+        notificationStore.add({
+          type: "danger",
+          message: "Your task has been deleted!",
+        });
       } catch (error) {
         console.error("error:", error);
       }
